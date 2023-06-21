@@ -1,7 +1,6 @@
 import { MenuCard } from "../components/MenuCard";
 import { Title } from "../components/Title";
 import students from "../images/students.png"
-import assignment from "../images/assignment.png"
 import settings from "../images/settings.png"
 import exercise from "../images/exercise.png"
 import "../styles/main.css"

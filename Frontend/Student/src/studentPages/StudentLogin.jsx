@@ -48,7 +48,7 @@ export function RegisterStudent() {
     const [firstName, setFirstName, firstNameInput] = useInput({ type: "text", label: "Ime" })
     const [lastName, setLastName, lastNameInput] = useInput({ type: "text", label: "Prezime" })
     const [nameClass, setNameClass, nameClassInput] = useInput({ type: "text", label: "Razred" })
-
+    
     const [error, setError] = useState("");
 
     const navigate = useNavigate()

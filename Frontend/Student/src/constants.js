@@ -2,3 +2,4 @@
 export const API_BASE_URL = process.env.REACT_APP_STUDENT_API;
 export const ACCESS_TOKEN = 'access-token';
 export const REFRESH_TOKEN = 'refresh-token';
+export const USER = "user"

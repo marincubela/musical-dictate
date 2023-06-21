@@ -40,7 +40,7 @@ axiosClient.interceptors.response.use(
       AuthService.removeTokens();
 
       if (window?.location?.href) {
-        window.location.href = `${window.location.protocol}//${window.location?.host}/login`;
+        window.location.href = `${window.location.protocol}//${window.location?.host}/student/login`;
       }
     }
 
