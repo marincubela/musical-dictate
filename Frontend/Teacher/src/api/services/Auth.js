@@ -1,8 +1,33 @@
 /*import { Api } from 'api/index';*/
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants";
+import { ACCESS_TOKEN, REFRESH_TOKEN, USER } from "../../constants";
 import { Api } from "../index"
 
 export default class AuthService {
+    static getUser() {
+        try {
+            return window?.localStorage?.getItem(USER);
+        } catch (error) {
+            // TODO What if user has disabled local storage?
+            return null;
+        }
+    }
+
+    static setUser(user) {
+        try {
+            window?.localStorage?.setItem(USER, user);
+        } catch (error) {
+            // TODO What if user has disabled local storage?
+        }
+    }
+
+    static removeUser() {
+        try {
+            window?.localStorage?.removeItem(USER);
+        } catch (error) {
+            // TODO What if user has disabled local storage?
+        }
+    }
+
     static getAccessToken() {
         try {
             return window?.localStorage?.getItem(ACCESS_TOKEN);
@@ -65,6 +90,7 @@ export default class AuthService {
             url: '/api/auth/login/student',
             data: { email, password },
         });
+        this.setUser({email})
         return this.saveTokens(tokens);
     }
 
@@ -73,11 +99,13 @@ export default class AuthService {
             url: '/api/auth/login/teacher',
             data: { email, password },
         });
+        this.setUser({email})
         return this.saveTokens(tokens);
     }
 
     static logoutUser(userName) {
         this.removeTokens();
+        this.removeUser();
         if (typeof window !== 'undefined') {
             // Force a hard reload
             window.location.href = '/login';
@@ -104,6 +132,7 @@ export default class AuthService {
             url: '/api/auth/register/student',
             data: { jmbag, firstName, lastName, nameClass, email, password },
         });
+        this.setUser({email})
         return this.saveTokens(tokens);
     }
 
@@ -117,6 +146,7 @@ export default class AuthService {
             url: '/api/auth/register/teacher',
             data: { firstName, lastName, email, password },
         });
+        this.setUser({email})
         return this.saveTokens(tokens);
     }
 }
