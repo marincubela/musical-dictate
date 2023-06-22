@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SimpleGrader.Models;
+﻿namespace SimpleGrader.Models;
 
 public class StudentSolution
 {

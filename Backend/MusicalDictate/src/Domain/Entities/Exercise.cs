@@ -1,5 +1,4 @@
 ﻿using Domain.Common;
-using Domain.ValueObjects;
 
 namespace Domain.Entities;
 

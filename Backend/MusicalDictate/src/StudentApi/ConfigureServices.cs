@@ -1,13 +1,11 @@
 ﻿using System.Text;
 using Application.Common.Interfaces;
 using FluentValidation.AspNetCore;
-using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence;
-using StudentApi.Consumers;
 using StudentApi.Filters;
 using StudentApi.Services;
 using ZymLabs.NSwag.FluentValidation;

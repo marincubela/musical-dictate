@@ -4,7 +4,6 @@ using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Persistence.Identity;
 using Persistence.Interceptors;
 

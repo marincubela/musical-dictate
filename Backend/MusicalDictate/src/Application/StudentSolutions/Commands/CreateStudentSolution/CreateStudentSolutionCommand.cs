@@ -3,7 +3,6 @@ using Application.Common.Interfaces;
 using Domain.Entities;
 using Domain.Events;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.StudentSolutions.Commands.CreateStudentSolution;

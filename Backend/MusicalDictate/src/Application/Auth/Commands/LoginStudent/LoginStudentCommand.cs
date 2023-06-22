@@ -2,7 +2,6 @@
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Auth.Commands.LoginStudent;
 

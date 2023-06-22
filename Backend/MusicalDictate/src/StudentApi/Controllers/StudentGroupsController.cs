@@ -1,10 +1,6 @@
-﻿using Application.StudentGroups.Commands.CreateStudentGroup;
-using Application.StudentGroups.Commands.DeleteStudentGroup;
-using Application.StudentGroups.Commands.UpdateStudentGroup;
-using Application.StudentGroups.Queries.GetMyStudentGroup;
+﻿using Application.StudentGroups.Queries.GetMyStudentGroup;
 using Application.StudentGroups.Queries.GetMyStudentGroups;
 using Application.StudentGroups.Queries.GetStudentGroup;
-using Application.StudentGroups.Queries.GetStudentGroups;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

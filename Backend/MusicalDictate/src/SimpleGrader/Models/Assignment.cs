@@ -1,6 +1,4 @@
 ﻿
-using System.Collections.Generic;
-
 namespace SimpleGrader.Models;
 
 public class Assignment

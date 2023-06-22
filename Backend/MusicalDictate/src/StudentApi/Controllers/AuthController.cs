@@ -1,10 +1,8 @@
 ﻿using Application.Auth.Commands.LoginStudent;
-using Application.Auth.Commands.LoginTeacher;
 using Application.Auth.Commands.RefreshToken;
 using Application.Auth.Commands.Revoke;
 using Application.Common.Models;
 using Application.Students.Commands.CreateStudent;
-using Application.Teachers.Commands.CreateTeacher;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

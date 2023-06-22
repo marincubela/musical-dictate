@@ -1,10 +1,7 @@
-﻿using Application.StudentSolutions.Commands.CreateStudentSolution;
-using Application.StudentSolutions.Commands.UpdateStudentSolutionResult;
-using Application.StudentSolutions.Queries.GetMyStudentSolutions;
+﻿using Application.StudentSolutions.Commands.UpdateStudentSolutionResult;
 using Application.StudentSolutions.Queries.GetStudentSolution;
 using Application.StudentSolutions.Queries.GetStudentSolutionsByAssignment;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TeacherApi.Controllers;
