@@ -11,5 +11,4 @@ public class StudentSolutionResultUpdatedEvent : BaseEvent
     }
 
     public StudentSolution StudentSolution { get; set; }
-
 }
