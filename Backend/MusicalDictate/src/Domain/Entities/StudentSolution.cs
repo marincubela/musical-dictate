@@ -17,18 +17,13 @@ public class StudentSolution : BaseAuditableEntity
     public string SolutionId { get; private set; } = Guid.Empty.ToString();
 
     public Sheet Solution { get; private set; }
-    
+
     public Result? Result { get; private set; }
-    
+
     public string? ResultId { get; private set; }
 
-    public void UpdateResult(Result result)
-    {
-        Result = result;
-    }
+    public void UpdateResult(Result result) => Result = result;
 
     public static StudentSolution Create(Student student, Assignment assignment, Sheet solution)
-    {
-        return new StudentSolution {Student = student, Assignment = assignment, Solution = solution};
-    }
+        => new StudentSolution {Student = student, Assignment = assignment, Solution = solution};
 }
