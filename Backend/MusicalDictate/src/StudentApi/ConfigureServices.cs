@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence;
+using StudentApi.Configurations;
 using StudentApi.Filters;
 using StudentApi.Services;
 using ZymLabs.NSwag.FluentValidation;
@@ -47,12 +48,15 @@ public static class ConfigureServices
 
         services.AddAuthentication(configuration);
         
+        var corsOptions = new CorsOptions();
+        configuration.GetSection(CorsOptions.Cors).Bind(corsOptions);
+        
         services.AddCors(options =>
         {
             options.AddPolicy(name: "Default",
                 policy  =>
                 {
-                    policy.WithOrigins("http://localhost:3010")
+                    policy.WithOrigins(corsOptions.AllowedOrigins.Split(";"))
                         .AllowCredentials()
                         .AllowAnyHeader()
                         .AllowAnyMethod();

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence;
+using WebApi.Configurations;
 using WebApi.Filters;
 using WebApi.Services;
 using ZymLabs.NSwag.FluentValidation;
@@ -45,14 +46,16 @@ public static class ConfigureServices
             options.SuppressModelStateInvalidFilter = true);
 
         services.AddAuthentication(configuration);
+
+        var corsOptions = new CorsOptions();
+        configuration.GetSection(CorsOptions.Cors).Bind(corsOptions);
         
         services.AddCors(options =>
         {
             options.AddPolicy(name: "Default",
                 policy  =>
                 {
-                    policy
-                        .WithOrigins("http://localhost:3001", "http://localhost:3010")
+                    policy.WithOrigins(corsOptions.AllowedOrigins.Split(";"))
                         .AllowAnyHeader()
                         .AllowCredentials()
                         .AllowAnyMethod();

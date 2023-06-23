@@ -20,10 +20,7 @@ services:
       - "5672:5672"
       - "15672:15672"
   studentapi:
-    image: studentapi
-    build:
-      context: Backend/MusicalDictate/
-      dockerfile: src/StudentApi/Dockerfile
+    image: musicaldictateregistry.azurecr.io/studentapi
     ports:
       - "7001:443"
       - "5001:80"
@@ -35,13 +32,8 @@ services:
       - "RabbitMq__Username=guest"
       - "RabbitMq__Password=guest"
       - "Cors__AllowedOrigins=http://localhost:3010"
-    depends_on:
-      - rabbitmq
   teacherapi:
-    image: teacherapi
-    build:
-      context: Backend/MusicalDictate/
-      dockerfile: src/TeacherApi/Dockerfile
+    image: musicaldictateregistry.azurecr.io/teacherapi
     ports:
       - "7002:443"
       - "5002:80"
@@ -53,13 +45,8 @@ services:
       - "RabbitMq__Username=guest"
       - "RabbitMq__Password=guest"
       - "Cors__AllowedOrigins=http://localhost:3001"
-    depends_on:
-      - rabbitmq
   webapi:
-    image: webapi
-    build:
-      context: Backend/MusicalDictate/
-      dockerfile: src/WebApi/Dockerfile
+    image: musicaldictateregistry.azurecr.io/webapi
     ports:
       - "7003:443"
       - "5003:80"
@@ -71,13 +58,8 @@ services:
       - "RabbitMq__Username=guest"
       - "RabbitMq__Password=guest"
       - "Cors__AllowedOrigins=http://localhost:3010;http://localhost:3001"
-    depends_on:
-      - rabbitmq
   simplegrader:
-    image: simplegrader
-    build:
-      context: Backend/MusicalDictate/
-      dockerfile: src/SimpleGrader/Dockerfile
+    image: musicaldictateregistry.azurecr.io/simplegrader
     ports:
       - "7004:443"
       - "5004:80"
@@ -90,13 +72,9 @@ services:
       - "RabbitMq__Username=guest"
       - "RabbitMq__Password=guest"
     depends_on:
-      - rabbitmq
       - webapi
   studentui:
-    image: studentui
-    build:
-      context: Frontend/Student
-      dockerfile: ./Dockerfile
+    image: musicaldictateregistry.azurecr.io/studentui
     ports:
       - "3010:3010"
     environment:
@@ -104,10 +82,7 @@ services:
     depends_on:
       - studentapi
   teacherui:
-    image: teacherui
-    build:
-      context: Frontend/Teacher
-      dockerfile: ./Dockerfile
+    image: musicaldictateregistry.azurecr.io/teacherui
     ports:
       - "3001:3001"
     environment:

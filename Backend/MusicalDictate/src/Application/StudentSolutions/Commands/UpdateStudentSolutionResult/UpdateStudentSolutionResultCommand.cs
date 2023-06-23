@@ -42,9 +42,9 @@ public class UpdateStudentSolutionResultCommandHandler : IRequestHandler<UpdateS
         solution.UpdateResult(Result.Create(teacher, Grade.FromValue(request.Grade), request.Percentage, request.Comment));
 
         solution.AddDomainEvent(new StudentSolutionResultUpdatedEvent(solution));
-        
+
         await _context.SaveChangesAsync(cancellationToken);
-        
+
         return Unit.Value;
     }
 }
