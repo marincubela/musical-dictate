@@ -2,14 +2,13 @@ import { useNavigate } from "react-router-dom"
 import logo from "../images/logo.png"
 import avatar from "../images/avatar.png"
 import AuthService from "../api/services/Auth";
-import { useContext, useEffect, useState } from "react";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { Notifications } from "./Notifications";
 import { API_BASE_URL } from "../constants";
 import "../styles/header.css"
 import "../styles/common.css"
 import StudentSolutionsService from "../api/services/StudentSolution";
-import { UserContext } from "../contexts/UserContext";
+import { useEffect, useState } from "react";
 
 export function Header() {
     const navigate = useNavigate();

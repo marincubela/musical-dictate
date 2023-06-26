@@ -30,7 +30,7 @@ export function StudentGroup() {
 
     useEffect(() => {
         (async () => {
-            const group = await GroupsService.getMyGroup(params.groupId);
+            const group = await GroupsService.getGroup(params.groupId);
             setGroup(group);
             setAssignments(group.assignments)
         })()

@@ -13,7 +13,7 @@ export function StudentGroups() {
 
     useEffect(() => {
         (async () => {
-            const res = await GroupsService.getMyGroups();
+            const res = await GroupsService.getGroups();
             console.log(res)
             setGroups(res);
         })()

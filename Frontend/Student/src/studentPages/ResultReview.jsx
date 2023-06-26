@@ -18,7 +18,7 @@ export function ResultReview() {
             const res = await StudentSolutionsService.getStudentSolution(params.solutionId);
             console.log(res)
             setSolution(res);
-            
+
             const container = document.getElementById('embed-container');
             const embed = new Embed(container, {
                 embedParams: {
@@ -44,6 +44,25 @@ export function ResultReview() {
             setStudentEmbed(studentEmbed);
         })()
     }, [])
+
+    const downloadSolution = (e) => {
+        e.getMusicXML({ compressed: true }).then(function (buffer) {
+            // Create a Blob from a compressed MusicXML file (Uint8Array)
+            var blobUrl = window.URL.createObjectURL(new Blob([buffer], {
+                type: 'application/vnd.recordare.musicxml+xml'
+            }));
+
+            // Create a hidden link to download the blob
+            var a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = 'MusicSheet.mxl';
+            document.body.appendChild(a);
+            a.style = 'display: none';
+            a.click();
+            a.remove();
+        });
+    }
+
     return <>
         <div className="container">
             <Title title={solution !== null ? solution.assignment.exercise.title : ""} />
@@ -64,6 +83,11 @@ export function ResultReview() {
             <SmallTitle title="Točno rješenje"></SmallTitle>
             <div className="sheet">
                 <div id="embed-container" className="embed-container"></div>
+            </div>
+            <div className="button-container">
+                <button className="button" onClick={() => downloadSolution(embed)}>Preuzmi točno rješenje</button>
+                <button className="button" onClick={() => downloadSolution(studentEmbed)}>Preuzmi predano rješenje</button>
+                <button className="button" onClick={() => navigate(-1)}>Natrag</button>
             </div>
         </div>
     </>
