@@ -1,10 +1,10 @@
 ﻿using Application.StudentGroups.Commands.CreateStudentGroup;
 using Application.StudentGroups.Commands.DeleteStudentGroup;
 using Application.StudentGroups.Commands.UpdateStudentGroup;
-using Application.StudentGroups.Queries.GetMyStudentGroup;
-using Application.StudentGroups.Queries.GetMyStudentGroups;
-using Application.StudentGroups.Queries.GetStudentGroup;
-using Application.StudentGroups.Queries.GetStudentGroups;
+using Application.StudentGroups.Queries.GetStudentGroupForStudent;
+using Application.StudentGroups.Queries.GetStudentGroupForTeacher;
+using Application.StudentGroups.Queries.GetStudentGroupsForStudent;
+using Application.StudentGroups.Queries.GetStudentGroupsForTeacher;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,28 +16,28 @@ public class StudentGroupsController : ApiControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<GetStudentGroupDto>> GetStudentGroup(string id)
     {
-        return Ok(await Mediator.Send(new GetStudentGroupQuery(id)));
+        return Ok(await Mediator.Send(new GetStudentGroupForTeacherQuery(id)));
     }
 
     [Authorize(Roles = "Teacher")]
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GetStudentGroupsDto>>> GetStudentGroups()
+    public async Task<ActionResult<IEnumerable<GetStudentGroupsForTeacherDto>>> GetStudentGroups()
     {
-        return Ok(await Mediator.Send(new GetStudentGroupsQuery()));
+        return Ok(await Mediator.Send(new GetStudentGroupsForTeacherQuery()));
     }
 
     [Authorize]
     [HttpGet("my/{id}")]
-    public async Task<ActionResult<GetMyStudentGroupDto>> GetMyStudentGroup(string id)
+    public async Task<ActionResult<GetStudentGroupForStudentDto>> GetMyStudentGroup(string id)
     {
-        return Ok(await Mediator.Send(new GetMyStudentGroupQuery(id)));
+        return Ok(await Mediator.Send(new GetStudentGroupForStudentQuery(id)));
     }
 
     [Authorize(Roles = "Student")]
     [HttpGet("my")]
-    public async Task<ActionResult<IEnumerable<GetMyStudentGroupsDto>>> GetMyStudentGroups()
+    public async Task<ActionResult<IEnumerable<GetStudentGroupsForStudentDto>>> GetMyStudentGroups()
     {
-        return Ok(await Mediator.Send(new GetMyStudentGroupsQuery()));
+        return Ok(await Mediator.Send(new GetStudentGroupsForStudentQuery()));
     }
 
     [Authorize(Roles = "Teacher")]

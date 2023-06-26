@@ -5,22 +5,22 @@ using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.StudentGroups.Queries.GetMyStudentGroup;
+namespace Application.StudentGroups.Queries.GetStudentGroupForStudent;
 
-public record GetMyStudentGroupQuery(string Id) : IRequest<GetMyStudentGroupDto>;
+public record GetStudentGroupForStudentQuery(string Id) : IRequest<GetStudentGroupForStudentDto>;
 
-public class GetMyStudentGroupQueryHandler : IRequestHandler<GetMyStudentGroupQuery, GetMyStudentGroupDto>
+public class GetStudentGroupForStudentQueryHandler : IRequestHandler<GetStudentGroupForStudentQuery, GetStudentGroupForStudentDto>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public GetMyStudentGroupQueryHandler(IMapper mapper, IApplicationDbContext context)
+    public GetStudentGroupForStudentQueryHandler(IMapper mapper, IApplicationDbContext context)
     {
         _mapper = mapper;
         _context = context;
     }
 
-    public async Task<GetMyStudentGroupDto> Handle(GetMyStudentGroupQuery request, CancellationToken cancellationToken)
+    public async Task<GetStudentGroupForStudentDto> Handle(GetStudentGroupForStudentQuery request, CancellationToken cancellationToken)
     {
         await _context.Exercises.LoadAsync(cancellationToken);
         await _context.Teachers.LoadAsync(cancellationToken);
@@ -33,6 +33,6 @@ public class GetMyStudentGroupQueryHandler : IRequestHandler<GetMyStudentGroupQu
         if (group == null)
             throw new NotFoundException(nameof(StudentGroup), request.Id);
 
-        return _mapper.Map<GetMyStudentGroupDto>(group);
+        return _mapper.Map<GetStudentGroupForStudentDto>(group);
     }
 }

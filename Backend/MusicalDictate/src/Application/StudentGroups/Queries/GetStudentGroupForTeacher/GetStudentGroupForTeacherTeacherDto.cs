@@ -1,9 +1,9 @@
 ﻿using Application.Common.Mappings;
 using Domain.Entities;
 
-namespace Application.StudentGroups.Queries.GetMyStudentGroup;
+namespace Application.StudentGroups.Queries.GetStudentGroupForTeacher;
 
-public class GetMyStudentGroupTeacherDto : IMapFrom<Teacher>
+public class GetStudentGroupForTeacherTeacherDto : IMapFrom<Teacher>
 {
     public string Id { get; set; }
     public string FirstName { get; set; }

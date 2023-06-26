@@ -1,6 +1,6 @@
-﻿using Application.StudentGroups.Queries.GetMyStudentGroup;
-using Application.StudentGroups.Queries.GetMyStudentGroups;
-using Application.StudentGroups.Queries.GetStudentGroup;
+﻿using Application.StudentGroups.Queries.GetStudentGroupForStudent;
+using Application.StudentGroups.Queries.GetStudentGroupForTeacher;
+using Application.StudentGroups.Queries.GetStudentGroupsForStudent;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,20 +10,14 @@ namespace StudentApi.Controllers;
 public class StudentGroupsController : ApiControllerBase
 {
     [HttpGet("{id}")]
-    public async Task<ActionResult<GetStudentGroupDto>> GetStudentGroup(string id)
+    public async Task<ActionResult<GetStudentGroupForStudentDto>> GetStudentGroup(string id)
     {
-        return Ok(await Mediator.Send(new GetStudentGroupQuery(id)));
+        return Ok(await Mediator.Send(new GetStudentGroupForStudentQuery(id)));
     }
 
-    [HttpGet("my/{id}")]
-    public async Task<ActionResult<GetMyStudentGroupDto>> GetMyStudentGroup(string id)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<GetStudentGroupsForStudentDto>>> GetStudentGroups()
     {
-        return Ok(await Mediator.Send(new GetMyStudentGroupQuery(id)));
-    }
-
-    [HttpGet("my")]
-    public async Task<ActionResult<IEnumerable<GetMyStudentGroupsDto>>> GetMyStudentGroups()
-    {
-        return Ok(await Mediator.Send(new GetMyStudentGroupsQuery()));
+        return Ok(await Mediator.Send(new GetStudentGroupsForStudentQuery()));
     }
 }

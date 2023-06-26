@@ -1,8 +1,8 @@
 ﻿using Application.StudentGroups.Commands.CreateStudentGroup;
 using Application.StudentGroups.Commands.DeleteStudentGroup;
 using Application.StudentGroups.Commands.UpdateStudentGroup;
-using Application.StudentGroups.Queries.GetStudentGroup;
-using Application.StudentGroups.Queries.GetStudentGroups;
+using Application.StudentGroups.Queries.GetStudentGroupForTeacher;
+using Application.StudentGroups.Queries.GetStudentGroupsForTeacher;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,13 +14,13 @@ public class StudentGroupsController : ApiControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<GetStudentGroupDto>> GetStudentGroup(string id)
     {
-        return Ok(await Mediator.Send(new GetStudentGroupQuery(id)));
+        return Ok(await Mediator.Send(new GetStudentGroupForTeacherQuery(id)));
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GetStudentGroupsDto>>> GetStudentGroups()
+    public async Task<ActionResult<IEnumerable<GetStudentGroupsForTeacherDto>>> GetStudentGroups()
     {
-        return Ok(await Mediator.Send(new GetStudentGroupsQuery()));
+        return Ok(await Mediator.Send(new GetStudentGroupsForTeacherQuery()));
     }
 
     [HttpPost]

@@ -5,22 +5,22 @@ using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.StudentGroups.Queries.GetStudentGroup;
+namespace Application.StudentGroups.Queries.GetStudentGroupForTeacher;
 
-public record GetStudentGroupQuery(string Id) : IRequest<GetStudentGroupDto>;
+public record GetStudentGroupForTeacherQuery(string Id) : IRequest<GetStudentGroupDto>;
 
-public class GetStudentGroupQueryHandler : IRequestHandler<GetStudentGroupQuery, GetStudentGroupDto>
+public class GetStudentGroupForTeacherQueryHandler : IRequestHandler<GetStudentGroupForTeacherQuery, GetStudentGroupDto>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public GetStudentGroupQueryHandler(IMapper mapper, IApplicationDbContext context)
+    public GetStudentGroupForTeacherQueryHandler(IMapper mapper, IApplicationDbContext context)
     {
         _mapper = mapper;
         _context = context;
     }
 
-    public async Task<GetStudentGroupDto> Handle(GetStudentGroupQuery request, CancellationToken cancellationToken)
+    public async Task<GetStudentGroupDto> Handle(GetStudentGroupForTeacherQuery request, CancellationToken cancellationToken)
     {
         await _context.Exercises.LoadAsync(cancellationToken);
         await _context.Teachers.LoadAsync(cancellationToken);

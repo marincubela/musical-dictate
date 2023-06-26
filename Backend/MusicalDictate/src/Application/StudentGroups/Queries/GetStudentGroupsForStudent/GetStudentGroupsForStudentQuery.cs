@@ -6,24 +6,24 @@ using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.StudentGroups.Queries.GetMyStudentGroups;
+namespace Application.StudentGroups.Queries.GetStudentGroupsForStudent;
 
-public record GetMyStudentGroupsQuery : IRequest<IEnumerable<GetMyStudentGroupsDto>>;
+public record GetStudentGroupsForStudentQuery : IRequest<IEnumerable<GetStudentGroupsForStudentDto>>;
 
-public class GetMyStudentGroupsQueryHandler : IRequestHandler<GetMyStudentGroupsQuery, IEnumerable<GetMyStudentGroupsDto>>
+public class GetStudentGroupsForStudentQueryHandler : IRequestHandler<GetStudentGroupsForStudentQuery, IEnumerable<GetStudentGroupsForStudentDto>>
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUserService;
     private readonly IMapper _mapper;
 
-    public GetMyStudentGroupsQueryHandler(IApplicationDbContext context, ICurrentUserService currentUserService, IMapper mapper)
+    public GetStudentGroupsForStudentQueryHandler(IApplicationDbContext context, ICurrentUserService currentUserService, IMapper mapper)
     {
         _context = context;
         _currentUserService = currentUserService;
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<GetMyStudentGroupsDto>> Handle(GetMyStudentGroupsQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<GetStudentGroupsForStudentDto>> Handle(GetStudentGroupsForStudentQuery request, CancellationToken cancellationToken)
     {
         var student = await _context.Students
             .Include(student => student.MyGroups)
@@ -34,7 +34,7 @@ public class GetMyStudentGroupsQueryHandler : IRequestHandler<GetMyStudentGroups
 
         return student.MyGroups
             .AsQueryable()
-            .ProjectTo<GetMyStudentGroupsDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<GetStudentGroupsForStudentDto>(_mapper.ConfigurationProvider)
             .ToList();
     }
 }
