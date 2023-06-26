@@ -25,6 +25,6 @@ public class StudentSolutionCreatedConsumer : IConsumer<StudentSolutionCreated>
         _logger.LogInformation("Received Message: {Id}, {Type}", context.Message.StudentSolutionId, context.Message.GraderType);
         var solution = await _sender.Send(new GetStudentSolutionQuery(context.Message.StudentSolutionId));
         
-        await _hubContext.Clients.All.StudentSolutionCreated(solution.Student.FirstName, solution.Student.LastName);
+        await _hubContext.Clients.All.StudentSolutionCreated(solution.Id, solution.Student.FirstName, solution.Student.LastName);
     }
 }

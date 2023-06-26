@@ -1,5 +1,9 @@
 version: '3.4'
 
+networks:
+  backend: #private
+  frontend: #public
+
 services:
   db:
     image: postgres:14.1-alpine
@@ -14,11 +18,33 @@ services:
       - "5433:5432"
     volumes:
       - db:/var/lib/postrgresql/data
+    networks:
+      - backend
   rabbitmq:
     image: rabbitmq:latest
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - backend
+  musicaldictateapi:
+    image: musicaldictateapi
+    build:
+      context: Backend/MusicalDictate/
+      dockerfile: src/ApiGateway/Dockerfile
+    environment:
+      - "ASPNETCORE_URLS=http://+:80"
+    ports:
+      - "5000:80"
+    depends_on:
+      - studentapi
+      - teacherapi
+      - webapi
+      - studentui
+      - teacherui
+    networks:
+      - backend
+      - frontend
   studentapi:
     image: studentapi
     build:
@@ -37,6 +63,8 @@ services:
       - "Cors__AllowedOrigins=http://localhost:3010"
     depends_on:
       - rabbitmq
+    networks:
+      - backend
   teacherapi:
     image: teacherapi
     build:
@@ -55,6 +83,8 @@ services:
       - "Cors__AllowedOrigins=http://localhost:3001"
     depends_on:
       - rabbitmq
+    networks:
+      - backend
   webapi:
     image: webapi
     build:
@@ -73,6 +103,8 @@ services:
       - "Cors__AllowedOrigins=http://localhost:3010;http://localhost:3001"
     depends_on:
       - rabbitmq
+    networks:
+      - backend
   simplegrader:
     image: simplegrader
     build:
@@ -92,6 +124,8 @@ services:
     depends_on:
       - rabbitmq
       - webapi
+    networks:
+      - backend
   studentui:
     image: studentui
     build:
@@ -100,9 +134,11 @@ services:
     ports:
       - "3010:3010"
     environment:
-      - REACT_APP_STUDENT_API=http://localhost:5001
+      - REACT_APP_STUDENT_API=http://localhost:5000/student
     depends_on:
       - studentapi
+    networks:
+      - frontend
   teacherui:
     image: teacherui
     build:
@@ -111,9 +147,11 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - REACT_APP_TEACHER_API=http://localhost:5002
+      - REACT_APP_TEACHER_API=http://localhost:5000/teacher
     depends_on:
       - teacherapi
+    networks:
+      - frontend
 volumes:
   db:
     driver: local

@@ -10,6 +10,12 @@ namespace StudentApi.Controllers;
 
 public class AuthController : ApiControllerBase
 {
+    [HttpGet("status")]
+    public async Task<IActionResult> IsLive()
+    {
+        return Ok("Živ sam");
+    }
+
     [HttpPost("login/student")]
     public async Task<ActionResult<Token>> LoginStudent([FromBody] LoginStudentCommand command)
     {

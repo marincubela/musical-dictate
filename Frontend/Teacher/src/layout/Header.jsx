@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import logo from "../images/logo.png"
 import avatar from "../images/avatar.png"
 import AuthService from "../api/services/Auth";
@@ -11,6 +11,7 @@ import "../styles/common.css"
 
 export function Header() {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [connection, setConnection] = useState(null);
     const [messages, setMessages] = useState([])
@@ -34,12 +35,15 @@ export function Header() {
                 })
                 .catch(e => console.log('Connection failed: ', e));
 
-            connection.on('StudentSolutionCreated', (firstName, lastName) => {
-                console.log(firstName + " " + lastName)
-                setMessages(messages => [...messages, firstName + " " + lastName])
+            connection.on('StudentSolutionCreated', (solutionId, firstName, lastName) => {
+                setMessages(messages => [...messages, { solutionId, firstName, lastName }])
             });
         }
     }, [connection]);
+
+    useEffect(() => {
+        setIsOpen(false)
+    }, [location])
 
     const onClick = () => {
         navigate("/main")
@@ -68,11 +72,11 @@ export function Header() {
                         <div className="header-username">Marin Ćubela</div>
                         <div className="header-username">Profesor</div>
                     </div>
-                    <div style={{position:"relative"}}>
+                    <div style={{ position: "relative" }}>
                         <button className="button" onClick={() => setIsOpen(v => !v)}>Obavijesti <b>{"(" + messages.length + ")"}</b></button>
                         {isOpen ?
-                        <Notifications messages={messages}></Notifications>
-                         : ""}
+                            <Notifications messages={messages} close={() => setIsOpen(false)}></Notifications>
+                            : ""}
                     </div>
                     <div className="icon-box">
                         <div className="logout-button" onClick={signOut}></div>

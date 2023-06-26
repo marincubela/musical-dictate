@@ -1,7 +1,7 @@
 .notifications-container {
     box-sizing: border-box;
     width: 600px;
-    height: 600px;
+    height: auto;
     border: 1px solid black;
     border-radius: 15px;
     background-color: rgb(255, 255, 255);
@@ -20,5 +20,13 @@
     border-bottom: 1px solid rgb(67, 106, 190);
     text-align: left;
 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
     padding: 25px 15px 5px 15px;
+}
+
+.notification-list-item:hover {
+    cursor: pointer;
 }

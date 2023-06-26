@@ -27,6 +27,16 @@ if (app.Environment.IsDevelopment())
         await initialiser.SeedAsync();
     }
 }
+else
+{
+    // Initialise and seed database
+    using (var scope = app.Services.CreateScope())
+    {
+        var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
+        await initialiser.InitialiseAsync();
+        await initialiser.SeedAsync();
+    }
+}
 
 app.UseCors("Default");
 

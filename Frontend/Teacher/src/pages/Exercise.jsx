@@ -16,23 +16,20 @@ export function Exercise() {
     const [exercise, setExercise] = useState();
     const [parts, setParts] = useState([]);
     const [title, setTitle, titleInput] = useInput({ type: "text", label: "Naslov:" });
-    const [embed, setEmbed] = useState(null);
     const [newPartStart, setNewPartStart, newPartInputStart] = useInput({ type: "number", label: null })
     const [newPartEnd, setNewPartEnd, newPartInputEnd] = useInput({ type: "number", label: null })
     const [newPartAttempts, setNewPartAttempts, newPartInputAttempts] = useInput({ type: "number", label: null })
     const [newPartTime, setNewPartTime, newPartInputTime] = useInput({ type: "number", label: null })
-
+    
     const params = useParams();
+
+    const [embed, setEmbed] = useState(null);
 
     useEffect(() => {
         (async () => {
             const exercise = await ExercisesService.getExercise(params.exerciseId)
-            console.log(exercise);
-            setExercise(exercise);
-            setParts(exercise.parts)
-
-            setTitle(exercise.title)
             const container = document.getElementById('embed-container');
+
             const embed = new Embed(container, {
                 score: '63c5d4aed4118d34674b1b42',
                 embedParams: {
@@ -41,9 +38,14 @@ export function Exercise() {
                     mode: 'edit'
                 }
             });
-            console.log((exercise.solution.musicXml))
             embed.loadMusicXML(exercise.solution.musicXml)
             setEmbed(embed);
+
+            console.log(exercise);
+            setExercise(exercise);
+            setParts(exercise.parts)
+
+            setTitle(exercise.title)
             setNewPartStart(1)
             setNewPartEnd(1)
             setNewPartAttempts(1)

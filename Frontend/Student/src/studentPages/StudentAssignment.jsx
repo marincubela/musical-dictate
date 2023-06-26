@@ -15,24 +15,19 @@ export function StudentAssignment() {
     const navigate = useNavigate();
     const [assignment, setAssignment] = useState();
     const [title, setTitle] = useState();
-    const [embed, setEmbed] = useState(null);
     const [studentEmbed, setStudentEmbed] = useState(null);
     const [parts, setParts] = useState([]);
     const [currentPart, setCurrentPart] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentAttempts, setCurrentAttempts] = useState(0);
-
+    
     const params = useParams();
+
+    const [embed, setEmbed] = useState(null);
 
     useEffect(() => {
         (async () => {
-            const res = await AssignmentsService.getAssignment(params.assignmentId);
-            console.log(res);
-            setAssignment(res);
-            setTitle(res.exercise.title)
-            setParts(res.exercise.parts.sort((a, b) => a.start - b.start))
-            setCurrentAttempts(0);
-
+            const assignment = await AssignmentsService.getAssignment(params.assignmentId);
             const container = document.getElementById('embed-container');
             const embed = new Embed(container, {
                 score: '63c5d4aed4118d34674b1b42',
@@ -42,8 +37,14 @@ export function StudentAssignment() {
                     mode: 'edit'
                 }
             });
-            await embed.loadMusicXML(res.exercise.solution.musicXml)
+            await embed.loadMusicXML(assignment.exercise.solution.musicXml)
             setEmbed(embed);
+
+            console.log(assignment);
+            setAssignment(assignment);
+            setTitle(assignment.exercise.title)
+            setParts(assignment.exercise.parts.sort((a, b) => a.start - b.start))
+            setCurrentAttempts(0);
 
             const studentContainer = document.getElementById('embed-container-student');
             const studentEmbed = new Embed(studentContainer, {

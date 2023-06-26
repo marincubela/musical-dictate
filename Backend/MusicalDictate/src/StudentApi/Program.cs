@@ -3,6 +3,7 @@ using Infrastructure;
 using Persistence;
 using StudentApi;
 using StudentApi.Hubs;
+using TeacherApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 

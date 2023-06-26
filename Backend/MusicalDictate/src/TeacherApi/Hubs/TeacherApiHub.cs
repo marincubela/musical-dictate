@@ -11,9 +11,9 @@ public class TeacherApiHub : Hub<ITeacherApiHubClient>
         _logger = logger;
     }
 
-    public async Task StudentSolutionCreated(string firstName, string lastName)
+    public async Task StudentSolutionCreated(string solutionId, string firstName, string lastName)
     {
         _logger.LogInformation("Sending: {FirstName}, {LastName}", firstName, lastName);
-        await Clients.All.StudentSolutionCreated(firstName, lastName);
+        await Clients.All.StudentSolutionCreated(solutionId, firstName, lastName);
     }
 }

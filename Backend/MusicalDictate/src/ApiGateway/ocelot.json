@@ -1,0 +1,76 @@
+{
+  "Routes": [
+    // studentapi microservice
+    {
+      "UpstreamPathTemplate": "/student/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ],
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "studentapi",
+          "Port": 80
+        }
+      ],
+      "Priority": 1
+    },
+    // SingalR for StudentApi
+    {
+      "UpstreamPathTemplate": "/student/hubs/{catchAll}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
+      "DownstreamPathTemplate": "/hubs/{catchAll}",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "studentapi",
+          "Port": 80
+        }
+      ],
+      "Priority": 2
+    },
+    // teacherapi microservice
+    {
+      "UpstreamPathTemplate": "/teacher/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ],
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "teacherapi",
+          "Port": 80
+        }
+      ],
+      "Priority": 1
+    },
+    // SingalR for TeacherApi
+    {
+      "UpstreamPathTemplate": "/teacher/hubs/{catchAll}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
+      "DownstreamPathTemplate": "/hubs/{catchAll}",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "teacherapi",
+          "Port": 80
+        }
+      ],
+      "Priority": 2
+    },
+    // webapi microservice
+    {
+      "UpstreamPathTemplate": "/api/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "webapi",
+          "Port": 80
+        }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5000"
+  }
+}

@@ -25,6 +25,8 @@ public class DeleteStudentGroupCommandHandler : IRequestHandler<DeleteStudentGro
             throw new NotFoundException(nameof(StudentGroup), request.Id);
 
         _context.StudentGroups.Remove(group);
+
+        await _context.SaveChangesAsync(cancellationToken);
         
         return Unit.Value;
     }

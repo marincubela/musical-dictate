@@ -3,6 +3,7 @@ using Infrastructure;
 using Persistence;
 using TeacherApi;
 using TeacherApi.Hubs;
+using TeacherApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("Default");
+app.UsePreflightRequestHandler();
 
 app.UseHttpsRedirection();
 

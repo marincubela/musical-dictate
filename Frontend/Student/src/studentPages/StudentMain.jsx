@@ -4,36 +4,8 @@ import students from "../images/students.png"
 import settings from "../images/settings.png"
 import exercise from "../images/exercise.png"
 import "../styles/main.css"
-import { useEffect, useState } from "react";
-import { HubConnectionBuilder } from "@microsoft/signalr";
 
 export function StudentMain() {
-    const [connection, setConnection] = useState(null);
-    const [messages, setMessages] = useState([])
-
-    useEffect(() => {
-        const newConnection = new HubConnectionBuilder()
-            .withUrl(`https://localhost:7150/hubs/student`)
-            .withAutomaticReconnect()
-            .build();
-
-        setConnection(newConnection);
-    }, []);
-
-    useEffect(() => {
-        if (connection) {
-            connection.start()
-                .then(result => {
-                    console.log('Connected!');
-                })
-                .catch(e => console.log('Connection failed: ', e));
-
-            connection.on('ResultUpdated', (studentSolutionId, exerciseTitle) => {
-                console.log(studentSolutionId + " " + exerciseTitle)
-                setMessages(messages => [...messages, studentSolutionId + " " + exerciseTitle])
-            });
-        }
-    }, [connection]);
     return (<>
         <div className="main-container">
             <Title title="Dobro došao nazad!" />
