@@ -69,7 +69,7 @@ export function Header() {
                 <div className="header-right">
                     <img src={avatar} alt="Profile picture" className="header-image profile-photo" />
                     <div>
-                        <div className="header-username">Marin Ćubela</div>
+                        <div className="header-username">{AuthService.getUser().email}</div>
                         <div className="header-username">Profesor</div>
                     </div>
                     <div style={{ position: "relative" }}>
