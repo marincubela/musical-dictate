@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import logo from "../images/logo.png"
 import avatar from "../images/avatar.png"
 import AuthService from "../api/services/Auth";
@@ -12,11 +12,12 @@ import { useEffect, useState } from "react";
 
 export function Header() {
     const navigate = useNavigate();
-    const user = AuthService.getUser();
+    const location = useLocation();
 
     const [connection, setConnection] = useState(null);
     const [messages, setMessages] = useState([])
     const [isOpen, setIsOpen] = useState(false);
+    const [user, setUser] = useState(null)
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
@@ -28,7 +29,13 @@ export function Header() {
     }, []);
 
     useEffect(() => {
-        console.log("Use effect")
+        (async () => {
+            setUser(await AuthService.getCurrentUser())
+        })()
+        setIsOpen(false)
+    }, [location])
+
+    useEffect(() => {
         if (connection) {
             connection.start()
                 .then(result => {
@@ -69,13 +76,13 @@ export function Header() {
                 <div className="header-right">
                     <img src={avatar} alt="Profile picture" className="header-image profile-photo" />
                     <div>
-                        <div className="header-username">{AuthService.getUser().email}</div>
+                        <div className="header-username">{user?.firstName != null ? user.firstName + " " + user.lastName : ""}</div>
                         <div className="header-username">Učenik</div>
                     </div>
                     <div style={{ position: "relative" }}>
                         <button className="button" onClick={() => setIsOpen(v => !v)}>Obavijesti <b>{"(" + messages.length + ")"}</b></button>
                         {isOpen ?
-                            <Notifications messages={messages}></Notifications>
+                            <Notifications messages={messages} close={() => setIsOpen(false)}></Notifications>
                             : ""}
                     </div>
                     <div className="icon-box">

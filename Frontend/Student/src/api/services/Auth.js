@@ -4,7 +4,8 @@ import { Api } from "../index"
 export default class AuthService {
     static getUser() {
         try {
-            return window?.localStorage?.getItem(USER);
+            console.log(JSON.parse(window?.localStorage?.getItem(USER)))
+            return JSON.parse(window?.localStorage?.getItem(USER));
         } catch (error) {
             // TODO What if user has disabled local storage?
             return null;
@@ -13,7 +14,7 @@ export default class AuthService {
 
     static setUser(user) {
         try {
-            window?.localStorage?.setItem(USER, user);
+            window?.localStorage?.setItem(USER, JSON.stringify(user));
         } catch (error) {
             // TODO What if user has disabled local storage?
         }
@@ -81,6 +82,16 @@ export default class AuthService {
             window?.localStorage?.removeItem(REFRESH_TOKEN);
         } catch (error) {
             // TODO What if user has disabled local storage?
+        }
+    }
+
+    static async getCurrentUser(id) {
+        try {
+            var user = await Api.get({ url: '/api/auth/current' });
+            return user;
+        } catch {
+            console.log("Error while fetching user")
+            return null;
         }
     }
 

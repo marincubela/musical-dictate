@@ -1,8 +1,10 @@
 ﻿using Application.Auth.Commands.LoginStudent;
 using Application.Auth.Commands.RefreshToken;
 using Application.Auth.Commands.Revoke;
+using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Students.Commands.CreateStudent;
+using Application.Students.Queries.GetStudent;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +12,25 @@ namespace StudentApi.Controllers;
 
 public class AuthController : ApiControllerBase
 {
+    private readonly ICurrentUserService _currentUserService;
+
+    public AuthController(ICurrentUserService currentUserService) {
+        _currentUserService = currentUserService;
+    }
+
     [HttpGet("status")]
     public async Task<IActionResult> IsLive()
     {
-        return Ok("Živ sam");
+        return Ok("Live");
+    }
+
+    [HttpGet("current")]
+    public async Task<ActionResult<GetStudentDto>> GetCurrentUser()
+    {
+        if (_currentUserService.UserId == null)
+            return Ok(null);
+
+        return Ok(await Mediator.Send(new GetStudentQuery(_currentUserService.UserId!)));
     }
 
     [HttpPost("login/student")]
