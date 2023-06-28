@@ -18,7 +18,7 @@ function App() {
         <Header />
         <main>
           <Routes>
-            <Route path="" element={<StudentMain />} />
+            <Route path="" element={<PrivateRoute><StudentMain /></PrivateRoute>} />
 
             <Route path="/student/login" element={<LoginStudent />} />
             <Route path="/student/register" element={<RegisterStudent />} />

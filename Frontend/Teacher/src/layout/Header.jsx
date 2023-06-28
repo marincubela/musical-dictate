@@ -16,6 +16,7 @@ export function Header() {
     const [connection, setConnection] = useState(null);
     const [messages, setMessages] = useState([])
     const [isOpen, setIsOpen] = useState(false);
+    const [user, setUser] = useState(null)
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
@@ -42,6 +43,9 @@ export function Header() {
     }, [connection]);
 
     useEffect(() => {
+        (async () => {
+            setUser(await AuthService.getCurrentUser())
+        })()
         setIsOpen(false)
     }, [location])
 
@@ -51,6 +55,8 @@ export function Header() {
 
     const signOut = () => {
         AuthService.logoutUser();
+        user = null;
+
         navigate("/login")
     }
 
@@ -69,7 +75,7 @@ export function Header() {
                 <div className="header-right">
                     <img src={avatar} alt="Profile picture" className="header-image profile-photo" />
                     <div>
-                        <div className="header-username">{AuthService.getUser().email}</div>
+                        <div className="header-username">{user?.firstName != null ? user.firstName + " " + user.lastName : ""}</div>
                         <div className="header-username">Profesor</div>
                     </div>
                     <div style={{ position: "relative" }}>

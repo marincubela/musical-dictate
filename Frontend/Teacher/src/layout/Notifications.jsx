@@ -8,7 +8,6 @@ export function Notifications({ messages, close }) {
         <div className="notifications-container">
             {messages.map(message => {
                 return <div
-                    onKeyUp={() => close()}
                     onClick={() => navigate(`/solutions/${message.solutionId}`)} 
                     className="notification-list-item">
                         <span>

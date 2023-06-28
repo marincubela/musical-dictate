@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import "../styles/notifications.css"
 
-export function Notifications({ messages: solutions }) {
+export function Notifications({ messages: solutions, close}) {
     const navigate = useNavigate();
 
     return (

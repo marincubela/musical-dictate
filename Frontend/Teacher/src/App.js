@@ -21,7 +21,7 @@ function App() {
         <Header />
         <main>
           <Routes>
-            <Route path="" element={<Main />} />
+            <Route path="" element={<PrivateRoute><Main /></PrivateRoute>} />
             <Route path="/login" element={<LoginTeacher />} />
             <Route path="/register" element={<RegisterTeacher />} />
 
